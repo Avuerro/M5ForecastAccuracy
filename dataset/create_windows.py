@@ -3,7 +3,7 @@ import pandas as pd
 
 
 
-def create_windows(raw_data,timesteps,prediction_steps):
+def create_windows(raw_data,timesteps,prediction_steps,event_features = False):
   
   len_window = timesteps + prediction_steps 
   nr_training_days = raw_data.shape[0]
@@ -13,7 +13,10 @@ def create_windows(raw_data,timesteps,prediction_steps):
 
   for i in range(nr_sets):
       samples = raw_data.iloc[i:i+timesteps]
-      pred = raw_data.iloc[i+timesteps]
+      if (event_features):
+        pred = raw_data.iloc[i+timesteps,:30490]
+      else:
+        pred = raw_data.iloc[i+timesteps]
       base.append(samples.to_numpy())
       predictions.append(pred.to_numpy())
       
@@ -21,7 +24,5 @@ def create_windows(raw_data,timesteps,prediction_steps):
   y = np.array(predictions)
 
   del base, predictions
-
-
-
   return X,y
+
