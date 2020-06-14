@@ -3,7 +3,7 @@ from keras.layers import LSTM, Dense, Bidirectional
 
 
 
-def lstm_model(timesteps,n_features,optimizer='adam',loss='mse',metrics=['acc']):
+def lstm_model(timesteps,n_features,optimizer='adam',loss='mse',metrics=['mse']):
   model = Sequential()
   model.add(Bidirectional(LSTM(20, return_sequences=True, input_shape=(timesteps, n_features))))
   model.add(Bidirectional(LSTM(10)))
